@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Simple Calendar</title>
+</head>
+<body>
+    <div id="calendar">
+       <header class="heading">
+        <h3 class="month-year-header"></h3>
+        <h2 class="date-header"></h2>
+        <div class="day-header"></div>
+       </header>
+            
+      <section class="calendar-body"> 
+        <ul class="weekend">
+            <li>CN</li>
+            <li>T2</li>
+            <li>T3</li>
+            <li>T4</li>
+            <li>T5</li>
+            <li>T6</li>
+            <li>T7</li>
+        </ul>
+        <ul class="dates"></ul>
+      </section>
+       
+       <nav id="navigation">
+           <button id="prev-month">&lt;&lt;</button>
+           <button id="prev-day">&lt;</button>
+           <select name="day" id="day"></select>
+           <span>/</span>
+           <select name="month" id="month"></select>
+           <span>/</span>
+           <input type="text" id="year">
+           <button class="submit-btn">OK</button>
+           <button id="next-day">&gt;</button>
+           <button id="next-month">&gt;&gt;</button>
+       </nav>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
