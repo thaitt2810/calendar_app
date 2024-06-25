@@ -13,8 +13,7 @@ let today = new Date();
 let month = today.getMonth();
 let year = today.getFullYear();
 let date = today.getDate();
-let day = today.getDay()
-
+let day = today.getDay()    
 
 
 function renderCalendar(){
@@ -26,10 +25,9 @@ function renderCalendar(){
     const firstDayOfMonth = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    
-    
-   
     daysContainer.innerHTML = '';
+    selectDay.innerHTML = "";
+    selectMonth.innerHTML = "";
 
     for (let i = 0; i < firstDayOfMonth; i++) {
         daysContainer.innerHTML += `<li></li>`;
@@ -38,34 +36,45 @@ function renderCalendar(){
     for (let i = 1; i <= daysInMonth; i++) {
         let className = "";
         let select = "";
-        if(i === today.getDate() && month === today.getMonth() && year === today.getFullYear()){
+        if(i === Number(date) && month && year){
             className ="class='active'"
-            select = 'selected'
      }
-
-        daysContainer.innerHTML += `<li ${className} on>${i}</li>`;
-        selectDay.innerHTML += `<option ${select}>${i}</option>`
+        daysContainer.innerHTML += `<li ${className} >${i}</li>`;
+        selectDay.innerHTML += `<option value="${i}" ${i === Number(date) ? 'selected' : ''}>${i}</option>`
+        
     }
-
 
     for (let i = 0; i < months.length; i++){
 
-        selectMonth.innerHTML += `<option ${ i=== month ? 'selected' : ''}>${months[i]}</option>`
+        selectMonth.innerHTML += `<option value = "${months[i]}" ${ i === month ? 'selected' : ''}>${months[i]}</option>`
     }
 
     currentYear.value = `${year}`
+
+    const days = daysContainer.querySelectorAll('li');
+
+
+    days.forEach(day => {
+
+        day.addEventListener('click', (e)=>{
+            days.forEach(d => {
+                d.classList.remove('active')
+            })
+            e.target.classList.add('active')
+        })
+    })
+
 }
 
-days.forEach(day => {
-
-    day.addEventListener('click', (e)=>{
-        days.forEach(d => {
-            day.classList.remove('active')
-        })
-        e.target.classList.add('active')
-    })
+document.getElementById('back').addEventListener('click', () => {
+    month = today.getMonth();
+    year = today.getFullYear();
+    date = today.getDate();
+    day = today.getDay()
+    isActive = true;
+    renderCalendar()
 })
-   
+
 
 //Prev-month
 document.getElementById('prev-month').addEventListener('click', () => {
@@ -74,6 +83,7 @@ document.getElementById('prev-month').addEventListener('click', () => {
         month = 11;
         year--;
     }
+
     renderCalendar();
 })
 
@@ -84,6 +94,28 @@ document.getElementById('next-month').addEventListener('click', () =>{
         month = 0;
         year++;
     }
+
     renderCalendar();
 })
+
+document.getElementById('prev-year').addEventListener('click', () => {
+    year--;
+    renderCalendar();
+})
+
+document.getElementById('next-year').addEventListener('click', () => {
+    year++;  
+    renderCalendar();
+})
+
+document.querySelector('.submit-btn').addEventListener('click', () =>{
+    year = currentYear.value 
+    month = selectMonth.value - 1;
+    date = selectDay.value
+    day = new Date(`'${year}-${month + 1}-${Number(date)}'`).getDay();
+
+    renderCalendar();
+})
+
+
 renderCalendar();
